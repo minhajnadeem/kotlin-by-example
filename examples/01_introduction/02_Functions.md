@@ -1,14 +1,25 @@
 # Functions
 
+### How to define a fun?
+
+```run-kotlin
+fun functionName() :  returnType  {
+    //your code goes here...
+    return returnType
+}
+```
+return type `unit` can be omited. In kotlin, funtion can have named and default value arguments. One of the thing I love about kotlin consiceness is that kotlin functions can be converted into expression if they have single line to execute.
+
 ### Default Parameter Values and Named Arguments
+
 
 ```run-kotlin
 fun printMessage(message: String): Unit {                               // 1
     println(message)
 }
 
-fun printMessageWithPrefix(message: String, prefix: String = "Info") {  // 2
-    println("[$prefix] $message")
+fun printBill(total: String, currency: String = "$") {  // 2
+    println("Total bill is $currency$total")
 }
 
 fun sum(x: Int, y: Int): Int {                                          // 3
@@ -19,9 +30,9 @@ fun multiply(x: Int, y: Int) = x * y                                    // 4
 
 fun main() {
     printMessage("Hello")                                               // 5                    
-    printMessageWithPrefix("Hello", "Log")                              // 6
-    printMessageWithPrefix("Hello")                                     // 7
-    printMessageWithPrefix(prefix = "Log", message = "Hello")           // 8
+    printBill("150", "Rs")                              // 6
+    printBill("220")                                     // 7
+    printBill(currency = "Kd", total = "20")           // 8
     println(sum(1, 2))                                                  // 9
     println(multiply(2, 4))                                             // 10
 }
@@ -33,14 +44,14 @@ fun main() {
 4. A single-expression function that returns an integer (inferred).
 5. Calls the first function with the argument `Hello`.
 6. Calls the function with two parameters, passing values for both of them.
-7. Calls the same function omitting the second one. The default value `Info` is used. 
+7. Calls the same function omitting the second one. The default value `$` is used. 
 8. Calls the same function using [named arguments](https://kotlinlang.org/docs/reference/functions.html#named-arguments) and changing the order of the arguments.
 9. Prints the result of the `sum` function call.
 10. Prints the result of the `multiply` function call.
 
 ### Infix Functions
 
-Member functions and extensions with a single parameter can be turned into [infix functions](https://kotlinlang.org/docs/reference/functions.html#infix-notation).
+Member functions and extensions with a single parameter can be turned into [infix functions](https://kotlinlang.org/docs/reference/functions.html#infix-notation). Infix functions are used to increase the readability of code. 
 
 ```run-kotlin
 fun main() {
@@ -75,58 +86,20 @@ class Person(val name: String) {
 
 Note that the example uses [local functions](https://kotlinlang.org/docs/reference/functions.html#local-functions) (functions nested within another function).
 
-### Operator Functions
-
-Certain functions can be "upgraded" to [operators](https://kotlinlang.org/docs/reference/operator-overloading.html), allowing their calls with the corresponding operator symbol.
-
-```run-kotlin
-fun main() {
-//sampleStart
-  operator fun Int.times(str: String) = str.repeat(this)       // 1
-  println(2 * "Bye ")                                          // 2
-
-  operator fun String.get(range: IntRange) = substring(range)  // 3
-  val str = "Always forgive your enemies; nothing annoys them so much."
-  println(str[0..14])                                          // 4
-//sampleEnd
-}
-```
-
-1. This takes the infix function from above one step further using the `operator` modifier.
-2. The operator symbol for `times()` is `*` so that you can call the function using `2 * "Bye"`.
-3. An operator function allows easy range access on strings.
-4. The `get()` operator enables [bracket-access syntax](https://kotlinlang.org/docs/reference/operator-overloading.html#indexed).
-
-### Functions with `vararg` Parameters
-
-[Varargs](https://kotlinlang.org/docs/reference/functions.html#variable-number-of-arguments-varargs) allow you to pass any number of arguments by separating them with commas.
+### Local Function
+Kotlin supports local functions, i.e. it allows you to put a function inside a function.
 
 ```run-kotlin
 fun main() {
-//sampleStart
-    fun printAll(vararg messages: String) {                            // 1
-        for (m in messages) println(m)
+
+    fun count(list : List<Any>) : Int{
+        return list.size
     }
-    printAll("Hello", "Hallo", "Salut", "Hola", "你好")                 // 2
     
-    fun printAllWithPrefix(vararg messages: String, prefix: String) {  // 3
-        for (m in messages) println(prefix + m)
-    }
-    printAllWithPrefix(
-            "Hello", "Hallo", "Salut", "Hola", "你好",
-            prefix = "Greeting: "                                          // 4
-    )
-
-    fun log(vararg entries: String) {
-        printAll(*entries)                                             // 5
-    }
-    log("Hello", "Hallo", "Salut", "Hola", "你好")
-//sampleEnd
+    val weeks = listOf("Monday","Tuesday","Wednesday")
+    println("total days is the list = ${count(weeks)}")
+    
+    val fruits = listOf("Apple", "Orange", "Banana", "Strawberry")
+    println("total fruits is the basket = ${count(fruits)}")
 }
 ```
-
-1. The `vararg` modifier turns a parameter into a vararg.
-2. This allows calling `printAll` with any number of string arguments.
-3. Thanks to named parameters, you can even add another parameter of the same type after the vararg. This wouldn't be allowed in Java because there's no way to pass a value.
-4. Using named parameters, you can set a value to `prefix` separately from the vararg.
-5. At runtime, a vararg is just an array. To pass it along into a vararg parameter, use the special spread operator `*` that lets you pass in `*entries` (a vararg of `String`) instead of `entries` (an `Array<String>`).
