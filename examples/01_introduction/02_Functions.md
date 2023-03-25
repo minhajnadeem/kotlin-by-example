@@ -103,3 +103,19 @@ fun main() {
     println("total fruits is the basket = ${count(fruits)}")
 }
 ```
+
+### Generic functions
+A function whose parameters are generic i.e it can be of any type. To define a Generic function use angle brackets before the function name:
+
+```run-kotlin
+
+fun main() {
+    val rollNumbers = listOf(100,101,102,103,105)
+    printItemsCount(weeks)
+    printItemsCount(rollNumbers)
+}
+
+fun <T> printItemsCount(items : List<T>){
+    println("Total items ${items.size}")
+}
+```
