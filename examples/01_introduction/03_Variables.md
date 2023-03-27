@@ -55,3 +55,21 @@ fun main() {
 1. Declares a variable without initialization.
 2. Initializes the variable with different values depending on some condition.
 3. Reading the variable is possible because it's already been initialized.
+
+Kotlin support null-safety and late initialization. By default a variable cannot be **null** but you can make a variable null-able by using `?`. 
+In kotlin if you don't want to Initialize a variable at it's declaration then you can define it as **lateinit**. Keep in note that a late initialized variable must be initialize before its usage. 
+
+```run-kotlin
+fun main() {
+    //nullable variable
+    var middleName : String? = null
+    middleName = "Smith"
+    println("Hi! I am John $middleName")
+    middleName = null
+    println("Hi! I am John $middleName")
+    
+    //late initialization
+    lateinit var initMeBeforeUse : String
+    println(initMeBeforeUse)	//Exception in thread "main" kotlin.UninitializedPropertyAccessException
+}
+```
