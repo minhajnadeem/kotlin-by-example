@@ -63,5 +63,42 @@ fun main() {
 2. If the given string is not `null` and not empty, return information about its length.
 3. Otherwise, tell the caller that the string is empty or null.
 
-    
-    
+## Null Safety Operators
+Safe-Call `?.`. In the example below the String property `length` is only accessed if **sha1** is not null otherwise the expression(sha1?.length) will return `null` and it will print "null"
+
+```run-kotlin
+fun main(){
+    val sha1: String? = null
+    println(sha1?.length)
+}
+```
+**Bonus:** the safe-call operator can be used with scope funtion e.g sha1`?.let`{/* some code*/}
+
+Elvis Operator `?:`. From the above example use elvis operator if you want to return some meaningfull value instead of **null** e.g
+
+```run-kotlin
+fun main(){
+    val sha1: String? = null
+    println(sha1?.length ?: 0)
+}
+```
+
+Not-null assertion operator `!!`. This operator return non-null value of the variable or function it is used on else throw NullPointerException
+
+```run-kotlin
+fun main(){
+    val sha1: String? = null
+    println(sha1!!.length)      // !! will try to convert nullable variable into non-null or throw NPE if it fails 
+}
+```
+**Tip:** use `!!` if you want to pass a nullable varible to a function that accept non-null variable.
+
+Safe casts `as?`. use safe-cast operator to avoid _ClassCastException_ while casting an object it will return null instead of throwing exception
+
+```run-kotlin
+fun main(){
+    var price = 59.5
+    val displayPrice : String? = price as? String
+    println(displayPrice)       // print null instead of throwing exception
+}
+```
