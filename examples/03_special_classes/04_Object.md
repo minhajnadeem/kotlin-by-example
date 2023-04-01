@@ -34,7 +34,7 @@ it ensures you that only one instance of that class is created even if 2 threads
 To achieve this in Kotlin, you only need to declare an `object`: no class, no constructor, only a lazy instance.
 Why lazy? Because it will be created once when the object is accessed. Otherwise, it won't even be created.
 
-### `object` Expression
+### `object` as Expression
 
 Here is a basic typical usage of an `object` **expression**: a simple object/properties structure.
 There is no need to do so in class declaration: you create a single object, declare its members and access it within one function. 
@@ -66,11 +66,12 @@ fun main() {
 4. Prints the result.
 5. Calls the function. This is when the object is actually created.
 
-### `object` Declaration
+### `object` as Declaration
 
 You can also use the `object` **declaration**. It isn't an expression, and can't be used in a variable assignment. You should use it to directly access its members:
 
 ```run-kotlin
+//outside of class
 object DoAuth {                                                 //1 
     fun takeParams(username: String, password: String) {        //2 
         println("input Auth parameters = $username:$password")
@@ -83,9 +84,11 @@ fun main(){
 
 ```
 
-1. Creates an object declaration.
+1. Creates an object declaration(outside the class).
 2. Defines the object method.
 3. Calls the method. This is when the object is actually created.
+
+**Tip:** If you plan to use a companion object in Kotlin, consider using a package-level function instead.
 
 ### Companion Objects
 
@@ -108,6 +111,7 @@ fun main() {
     BigBen.getBongs(12)                         //4
 }
 ```
+**Bonus:** `companion object` is only used inside the class and only one companion object is allowed.
 
 1. Defines a class.
 2. Defines a companion. Its name can be omitted.
